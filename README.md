@@ -1,2 +1,2 @@
 # boost-python-lookup
-Boost.Python 逆引きリファレンス
+https://yokaze.github.io/boost-python-lookup/
