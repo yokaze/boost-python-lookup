@@ -1,4 +1,4 @@
-# list, tuple のインスタンスを作る
+# list のインスタンスを作る
 ```boost::python::list```, ```list.append``` を使う。
 
 ### 構文
