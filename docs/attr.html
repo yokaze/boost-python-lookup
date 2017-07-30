@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Boost.Python 逆引きリファレンス · GitBook</title>
+        <title>object の属性を取得する · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,8 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="attr.html" />
+    <link rel="next" href="extract.html" />
     
+    
+    <link rel="prev" href="./" />
     
 
     </head>
@@ -87,7 +89,7 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="./">
             
                 <a href="./">
             
@@ -107,7 +109,7 @@
         
         
     
-        <li class="chapter " data-level="2.1" data-path="attr.html">
+        <li class="chapter active" data-level="2.1" data-path="attr.html">
             
                 <a href="attr.html">
             
@@ -209,7 +211,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Boost.Python 逆引きリファレンス</a>
+        <a href="." >object の属性を取得する</a>
     </h1>
 </div>
 
@@ -224,7 +226,39 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="boostpython-&#x9006;&#x5F15;&#x304D;&#x30EA;&#x30D5;&#x30A1;&#x30EC;&#x30F3;&#x30B9;">Boost.Python &#x9006;&#x5F15;&#x304D;&#x30EA;&#x30D5;&#x30A1;&#x30EC;&#x30F3;&#x30B9;</h1>
+                                <h1 id="object-&#x306E;&#x5C5E;&#x6027;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;">object &#x306E;&#x5C5E;&#x6027;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;</h1>
+<p><code>attr</code> &#x95A2;&#x6570;&#x3092;&#x4F7F;&#x3046;&#x3002;</p>
+<p><a href="extract.html">object &#x3092; C++ &#x306E;&#x578B;&#x306B;&#x5909;&#x63DB;&#x3059;&#x308B;</a> &#x3082;&#x53C2;&#x7167;&#x306E;&#x3053;&#x3068;&#x3002;</p>
+<h3 id="&#x69CB;&#x6587;">&#x69CB;&#x6587;</h3>
+<pre><code class="lang-cpp"><span class="hljs-keyword">namespace</span> boost::python
+{
+    <span class="hljs-keyword">class</span> object
+    {
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-function">const_object_attribute <span class="hljs-title">attr</span><span class="hljs-params">(<span class="hljs-keyword">const</span> object&amp;)</span> <span class="hljs-keyword">const</span></span>;
+        <span class="hljs-function">object_attribute <span class="hljs-title">attr</span><span class="hljs-params">(<span class="hljs-keyword">const</span> object&amp;)</span></span>;
+    }
+}
+</code></pre>
+<h3 id="&#x5177;&#x4F53;&#x4F8B;">&#x5177;&#x4F53;&#x4F8B;</h3>
+<pre><code class="lang-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;boost/python.hpp&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span>
+
+<span class="hljs-keyword">namespace</span> python = boost::python;
+<span class="hljs-keyword">using</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print_str</span><span class="hljs-params">(python::object obj)</span>
+</span>{
+    python::object string_attribute = obj.attr(<span class="hljs-string">&quot;__str__&quot;</span>);
+    <span class="hljs-built_in">string</span> expression = python::extract&lt;<span class="hljs-built_in">string</span>&gt;(string_attribute());
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>, expression.c_str());
+}
+</code></pre>
+<h3 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h3>
+<ul>
+<li><a href="https://github.com/boostorg/python/blob/master/include/boost/python/object_core.hpp" target="_blank">https://github.com/boostorg/python/blob/master/include/boost/python/object_core.hpp</a></li>
+</ul>
 
                                 
                                 </section>
@@ -252,8 +286,12 @@
 
             
                 
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Boost.Python 逆引きリファレンス">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="attr.html" class="navigation navigation-next navigation-unique" aria-label="Next page: object の属性を取得する">
+                
+                <a href="extract.html" class="navigation navigation-next " aria-label="Next page: object を C++ の型に変換する">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -264,7 +302,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Boost.Python 逆引きリファレンス","level":"1.1","depth":1,"next":{"title":"object の属性を取得する","level":"2.1","depth":1,"path":"attr.md","ref":"attr.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2017-07-30T12:14:44.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-30T12:35:43.293Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"object の属性を取得する","level":"2.1","depth":1,"next":{"title":"object を C++ の型に変換する","level":"2.2","depth":1,"path":"extract.md","ref":"extract.md","articles":[]},"previous":{"title":"Boost.Python 逆引きリファレンス","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"attr.md","mtime":"2017-07-30T12:29:37.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-30T12:35:43.293Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
