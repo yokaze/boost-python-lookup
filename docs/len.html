@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>tuple のインスタンスを作る · GitBook</title>
+        <title>list, tuple の長さを取得する · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="len.html" />
+    <link rel="next" href="element.html" />
     
     
-    <link rel="prev" href="list.html" />
+    <link rel="prev" href="tuple.html" />
     
 
     </head>
@@ -148,7 +148,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="2.4" data-path="tuple.html">
+        <li class="chapter " data-level="2.4" data-path="tuple.html">
             
                 <a href="tuple.html">
             
@@ -161,7 +161,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.5" data-path="len.html">
+        <li class="chapter active" data-level="2.5" data-path="len.html">
             
                 <a href="len.html">
             
@@ -250,7 +250,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >tuple のインスタンスを作る</a>
+        <a href="." >list, tuple の長さを取得する</a>
     </h1>
 </div>
 
@@ -265,29 +265,27 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="tuple-&#x306E;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x3092;&#x4F5C;&#x308B;">tuple &#x306E;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x3092;&#x4F5C;&#x308B;</h1>
-<p><code>boost::python::make_tuple</code> &#x95A2;&#x6570;&#x3092;&#x4F7F;&#x3046;&#x3002;</p>
+                                <h1 id="list-tuple-&#x306E;&#x9577;&#x3055;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;">list, tuple &#x306E;&#x9577;&#x3055;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;</h1>
+<p><code>boost::python::len</code> &#x95A2;&#x6570;&#x3092;&#x4F7F;&#x3046;&#x3002;</p>
 <h3 id="&#x69CB;&#x6587;">&#x69CB;&#x6587;</h3>
 <pre><code class="lang-cpp"><span class="hljs-keyword">namespace</span> boost::python
 {
-    <span class="hljs-comment">// &#x3053;&#x306E;&#x8868;&#x8A18;&#x306F;&#x30AA;&#x30EA;&#x30B8;&#x30CA;&#x30EB;&#x306E;&#x5B9F;&#x88C5;&#x3068;&#x4E00;&#x90E8;&#x3053;&#x3068;&#x306A;&#x308B;&#x3002;</span>
-    <span class="hljs-comment">// &#x8A73;&#x7D30;&#x306F; &lt;boost/python/detail/make_tuple.hpp&gt; &#x3092;&#x53C2;&#x7167;&#x306E;&#x3053;&#x3068;&#x3002;</span>
-    <span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span>... Ts&gt;
-    <span class="hljs-function">tuple <span class="hljs-title">make_tuple</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Ts&amp;...)</span></span>;
+    <span class="hljs-keyword">ssize_t</span> len(object&amp; obj);
 }
 </code></pre>
 <h3 id="&#x5177;&#x4F53;&#x4F8B;">&#x5177;&#x4F53;&#x4F8B;</h3>
 <pre><code class="lang-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;boost/python.hpp&gt;</span></span>
 <span class="hljs-keyword">namespace</span> python = boost::python;
 
-python::<span class="hljs-function">object <span class="hljs-title">make_tuple</span><span class="hljs-params">()</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">get_list_length</span><span class="hljs-params">(python::<span class="hljs-built_in">list</span> obj)</span>
 </span>{
-    <span class="hljs-keyword">return</span> python::make_tuple(<span class="hljs-number">1</span>, <span class="hljs-number">2.3</span>, <span class="hljs-string">&quot;test&quot;</span>);
+    <span class="hljs-keyword">return</span> python::len(obj);
 }
 </code></pre>
+<p>&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x304C; <code>__len__</code> &#x5C5E;&#x6027;&#x3092;&#x6301;&#x3063;&#x3066;&#x3044;&#x308C;&#x3070;&#x3001;<code>list</code>, <code>tuple</code> &#x4EE5;&#x5916;&#x306E;&#x578B;&#x3067;&#x3082;&#x4F7F;&#x3046;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x308B;&#x3002;</p>
 <h3 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h3>
 <ul>
-<li><a href="https://github.com/boostorg/python/blob/master/include/boost/python/detail/make_tuple.hpp" target="_blank">https://github.com/boostorg/python/blob/master/include/boost/python/detail/make_tuple.hpp</a></li>
+<li><a href="https://github.com/boostorg/python/blob/master/include/boost/python/object.hpp" target="_blank">https://github.com/boostorg/python/blob/master/include/boost/python/object.hpp</a></li>
 </ul>
 
                                 
@@ -316,12 +314,12 @@ python::<span class="hljs-function">object <span class="hljs-title">make_tuple</
 
             
                 
-                <a href="list.html" class="navigation navigation-prev " aria-label="Previous page: list のインスタンスを作る">
+                <a href="tuple.html" class="navigation navigation-prev " aria-label="Previous page: tuple のインスタンスを作る">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="len.html" class="navigation navigation-next " aria-label="Next page: list, tuple の長さを取得する">
+                <a href="element.html" class="navigation navigation-next " aria-label="Next page: list, tuple の要素にアクセスする">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -332,7 +330,7 @@ python::<span class="hljs-function">object <span class="hljs-title">make_tuple</
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"tuple のインスタンスを作る","level":"2.4","depth":1,"next":{"title":"list, tuple の長さを取得する","level":"2.5","depth":1,"path":"len.md","ref":"len.md","articles":[]},"previous":{"title":"list のインスタンスを作る","level":"2.3","depth":1,"path":"list.md","ref":"list.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["ga","livereload"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-83271338-1"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tuple.md","mtime":"2017-07-30T12:29:48.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-30T15:23:30.496Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"list, tuple の長さを取得する","level":"2.5","depth":1,"next":{"title":"list, tuple の要素にアクセスする","level":"2.6","depth":1,"path":"element.md","ref":"element.md","articles":[]},"previous":{"title":"tuple のインスタンスを作る","level":"2.4","depth":1,"path":"tuple.md","ref":"tuple.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["ga","livereload"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-83271338-1"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"len.md","mtime":"2017-07-30T15:24:12.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-30T15:23:30.496Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

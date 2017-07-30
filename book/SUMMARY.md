@@ -6,6 +6,9 @@
 * [object を C++ の型に変換する](extract.md)
 * [list のインスタンスを作る](list.md)
 * [tuple のインスタンスを作る](tuple.md)
+* [list, tuple の長さを取得する](len.md)
+* [list, tuple の要素にアクセスする](element.md)
+* [python module を import する](import.md)
 
 ### その他
   * [GitHub](https://github.com/yokaze/boost-python-lookup)
