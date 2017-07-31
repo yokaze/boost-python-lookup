@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>list, tuple の要素にアクセスする · GitBook</title>
+        <title>拡張 module の作成 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="import.html" />
+    <link rel="next" href="attr.html" />
     
     
-    <link rel="prev" href="len.html" />
+    <link rel="prev" href="./" />
     
 
     </head>
@@ -109,7 +109,7 @@
         
         
     
-        <li class="chapter " data-level="2.1" data-path="compile.html">
+        <li class="chapter active" data-level="2.1" data-path="compile.html">
             
                 <a href="compile.html">
             
@@ -194,7 +194,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="3.6" data-path="element.html">
+        <li class="chapter " data-level="3.6" data-path="element.html">
             
                 <a href="element.html">
             
@@ -270,7 +270,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >list, tuple の要素にアクセスする</a>
+        <a href="." >拡張 module の作成</a>
     </h1>
 </div>
 
@@ -285,20 +285,78 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="list-tuple-&#x306E;&#x8981;&#x7D20;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3059;&#x308B;">list, tuple &#x306E;&#x8981;&#x7D20;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3059;&#x308B;</h1>
-<p>C++ &#x306E;&#x6DFB;&#x5B57;&#x6F14;&#x7B97;&#x5B50;&#x3092;&#x305D;&#x306E;&#x307E;&#x307E;&#x4F7F;&#x3046;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x308B;&#x3002;</p>
+                                <h1 id="&#x62E1;&#x5F35;-module-&#x306E;&#x4F5C;&#x6210;">&#x62E1;&#x5F35; module &#x306E;&#x4F5C;&#x6210;</h1>
+<p>&#x30E9;&#x30A4;&#x30D6;&#x30E9;&#x30EA;&#x3092; C++ &#x3067;&#x8A18;&#x8FF0;&#x3057;&#x3001;<code>setup.py</code> &#x3092;&#x6E96;&#x5099;&#x3059;&#x308B;&#x3002;</p>
 <h3 id="&#x5177;&#x4F53;&#x4F8B;">&#x5177;&#x4F53;&#x4F8B;</h3>
 <pre><code class="lang-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;boost/python.hpp&gt;</span></span>
 <span class="hljs-keyword">namespace</span> python = boost::python;
 
-python::<span class="hljs-function">object <span class="hljs-title">get_second_element</span><span class="hljs-params">(python::<span class="hljs-built_in">list</span> obj)</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">hello</span><span class="hljs-params">()</span>
 </span>{
-    <span class="hljs-keyword">return</span> obj[<span class="hljs-number">1</span>];
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello World!\n&quot;</span>);
+}
+
+BOOST_PYTHON_MODULE(hello_demo)
+{
+    python::def(<span class="hljs-string">&quot;hello&quot;</span>, hello);
 }
 </code></pre>
+<p>&#x30D0;&#x30A4;&#x30CA;&#x30EA;&#x306E;&#x30D3;&#x30EB;&#x30C9;&#x306B;&#x5FC5;&#x8981;&#x306A; <code>setup.py</code> &#x306F;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x8A18;&#x8FF0;&#x3059;&#x308B;&#x3002;</p>
+<pre><code class="lang-python"><span class="hljs-comment"># -*- coding: utf-8 -*-</span>
+<span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">import</span> platform
+<span class="hljs-keyword">import</span> subprocess
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">from</span> distutils.core <span class="hljs-keyword">import</span> setup, Extension
+
+include_dirs = []
+library_dirs = []
+
+<span class="hljs-keyword">if</span> (platform.system() == <span class="hljs-string">&apos;Darwin&apos;</span>):
+    <span class="hljs-keyword">try</span>:
+        <span class="hljs-comment"># Mac, Homebrew &#x5C0E;&#x5165;&#x6E08;&#x307F;&#x3067;&#x304B;&#x3064;&#x3001;PATH &#x304C;&#x8A2D;&#x5B9A;&#x3055;&#x308C;&#x3066;&#x3044;&#x306A;&#x3044;&#x5834;&#x5408;&#x306B;&#x5BFE;&#x51E6;&#x3059;&#x308B;&#x3002;</span>
+        <span class="hljs-comment"># PATH &#x304C;&#x8A2D;&#x5B9A;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;&#x3001;&#x3053;&#x306E;&#x30B3;&#x30FC;&#x30C9;&#x306F;&#x5FC5;&#x8981;&#x306A;&#x3044;&#x3002;</span>
+        subprocess.check_call([<span class="hljs-string">&apos;which&apos;</span>, <span class="hljs-string">&apos;brew&apos;</span>], stdout=subprocess.PIPE)
+        include_dirs = [<span class="hljs-string">&apos;/usr/local/include&apos;</span>]
+        library_dirs = [<span class="hljs-string">&apos;/usr/local/lib&apos;</span>]
+    <span class="hljs-keyword">finally</span>:
+        <span class="hljs-keyword">pass</span>
+
+<span class="hljs-comment"># &#x62E1;&#x5F35;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x306E;&#x8A2D;&#x5B9A;&#x3092;&#x8A18;&#x8FF0;&#x3059;&#x308B;&#x3002;</span>
+<span class="hljs-comment"># &#x8FFD;&#x52A0;&#x306E; include/library directory &#x306A;&#x3069;&#x304C;&#x6307;&#x5B9A;&#x3067;&#x304D;&#x308B;&#x3002;</span>
+ex_module = Extension(
+    <span class="hljs-string">&apos;hello_demo&apos;</span>,
+    sources=[<span class="hljs-string">&apos;hello_demo.cpp&apos;</span>],
+    libraries=[<span class="hljs-string">&apos;boost_python&apos;</span>],
+    include_dirs=include_dirs,
+    library_dirs=library_dirs,
+    extra_compile_args=[<span class="hljs-string">&apos;-std=c++11&apos;</span>],
+)
+
+setup(name=<span class="hljs-string">&quot;demo&quot;</span>, version=<span class="hljs-string">&quot;1.0&quot;</span>, ext_modules=[ex_module])
+</code></pre>
+<p>&#x307E;&#x305F;&#x3001;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306A; <code>makefile</code> &#x3092;&#x4F5C;&#x6210;&#x3057;&#x3066;&#x304A;&#x304F;&#x3068;&#x4FBF;&#x5229;&#x3067;&#x3042;&#x308B;&#x3002;</p>
+<pre><code>default:
+    python setup.py build_ext -i -f
+</code></pre><p><code>-i</code> &#x306F; in-place &#xFF08;&#x540C;&#x3058;&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x306B;&#x30D0;&#x30A4;&#x30CA;&#x30EA;&#x3092;&#x4F5C;&#x6210;&#xFF09;&#x3001;
+<code>-f</code> &#x306F; force &#xFF08;&#x30D0;&#x30A4;&#x30CA;&#x30EA;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306E;&#x4E0A;&#x66F8;&#x304D;&#xFF09;&#x3092;&#x610F;&#x5473;&#x3059;&#x308B;&#x3002;</p>
+<h3 id="&#x5B9F;&#x884C;&#x4F8B;">&#x5B9F;&#x884C;&#x4F8B;</h3>
+<pre><code>$ make
+python setup.py build_ext -i -f
+running build_ext
+building &apos;hello_demo&apos; extension
+...
+$ python
+&gt;&gt;&gt; import hello_demo
+&gt;&gt;&gt; hello_demo.hello()
+Hello World!
+</code></pre><h3 id="&#x30BD;&#x30FC;&#x30B9;&#x30B3;&#x30FC;&#x30C9;">&#x30BD;&#x30FC;&#x30B9;&#x30B3;&#x30FC;&#x30C9;</h3>
+<ul>
+<li><a href="https://github.com/yokaze/boost-python-lookup/tree/master/demo/hello" target="_blank">https://github.com/yokaze/boost-python-lookup/tree/master/demo/hello</a></li>
+</ul>
 <h3 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h3>
 <ul>
-<li><a href="https://github.com/boostorg/python/blob/master/include/boost/python/object_core.hpp" target="_blank">https://github.com/boostorg/python/blob/master/include/boost/python/object_core.hpp</a></li>
+<li><a href="https://docs.python.jp/3/extending/building.html" target="_blank">https://docs.python.jp/3/extending/building.html</a></li>
 </ul>
 
                                 
@@ -327,12 +385,12 @@ python::<span class="hljs-function">object <span class="hljs-title">get_second_e
 
             
                 
-                <a href="len.html" class="navigation navigation-prev " aria-label="Previous page: list, tuple の長さを取得する">
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Boost.Python 逆引きリファレンス">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="import.html" class="navigation navigation-next " aria-label="Next page: python module を import する">
+                <a href="attr.html" class="navigation navigation-next " aria-label="Next page: object の属性を取得する">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -343,7 +401,7 @@ python::<span class="hljs-function">object <span class="hljs-title">get_second_e
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"list, tuple の要素にアクセスする","level":"3.6","depth":1,"next":{"title":"python module を import する","level":"3.7","depth":1,"path":"import.md","ref":"import.md","articles":[]},"previous":{"title":"list, tuple の長さを取得する","level":"3.5","depth":1,"path":"len.md","ref":"len.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["ga","livereload"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-83271338-1"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"element.md","mtime":"2017-07-30T15:24:19.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T09:45:57.582Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"拡張 module の作成","level":"2.1","depth":1,"next":{"title":"object の属性を取得する","level":"3.1","depth":1,"path":"attr.md","ref":"attr.md","articles":[]},"previous":{"title":"Boost.Python 逆引きリファレンス","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["ga","livereload"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-83271338-1"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"compile.md","mtime":"2017-07-31T10:16:15.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T09:45:57.582Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

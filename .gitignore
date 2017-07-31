@@ -1,2 +1,4 @@
+*.so
 _book
+build
 node_modules
