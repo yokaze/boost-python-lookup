@@ -26,9 +26,6 @@ import subprocess
 import sys
 from distutils.core import setup, Extension
 
-include_dirs = []
-library_dirs = []
-
 if (platform.system() == 'Darwin'):
     try:
         # Mac, Homebrew 導入済みでかつ、PATH が設定されていない場合に対処する。
