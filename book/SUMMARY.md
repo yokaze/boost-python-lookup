@@ -1,5 +1,5 @@
 # Summary
-* [Boost.Python 逆引きリファレンス](README.md)
+* [Boost.Python 逆引きコード集](README.md)
 
 ### ビルド
 * [拡張 module の作成](compile.md)
