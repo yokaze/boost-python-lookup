@@ -24,5 +24,8 @@ python::object make_tuple()
 }
 ```
 
+### ソースコード
+- https://github.com/yokaze/boost-python-lookup/tree/master/demo/tuple_demo.cpp
+
 ### 参考
 - https://github.com/boostorg/python/blob/master/include/boost/python/detail/make_tuple.hpp

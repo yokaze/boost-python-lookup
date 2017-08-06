@@ -34,5 +34,8 @@ void print_str(python::object obj)
 }
 ```
 
+### ソースコード
+- https://github.com/yokaze/boost-python-lookup/tree/master/demo/attr_demo.cpp
+
 ### 参考
 - https://github.com/boostorg/python/blob/master/include/boost/python/object_core.hpp

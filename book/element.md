@@ -13,5 +13,8 @@ python::object get_second_element(python::list obj)
 }
 ```
 
+### ソースコード
+- https://github.com/yokaze/boost-python-lookup/tree/master/demo/element_demo.cpp
+
 ### 参考
 - https://github.com/boostorg/python/blob/master/include/boost/python/object_core.hpp

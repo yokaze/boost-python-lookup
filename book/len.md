@@ -23,5 +23,8 @@ int get_list_length(python::list obj)
 
 オブジェクトが ```__len__``` 属性を持っていれば、```list```, ```tuple``` 以外の型でも使うことができる。
 
+### ソースコード
+- https://github.com/yokaze/boost-python-lookup/tree/master/demo/len_demo.cpp
+
 ### 参考
 - https://github.com/boostorg/python/blob/master/include/boost/python/object.hpp

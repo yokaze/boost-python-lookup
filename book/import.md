@@ -23,6 +23,9 @@ python::object factorial(int n)
 }
 ```
 
+### ソースコード
+- https://github.com/yokaze/boost-python-lookup/tree/master/demo/import_demo.cpp
+
 ### 参考
 - https://github.com/boostorg/python/blob/master/include/boost/python/import.hpp
 - https://docs.python.jp/3/library/math.html
